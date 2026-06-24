@@ -1,11 +1,27 @@
 import 'dotenv/config'
+import { readFileSync } from 'fs'
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
 import express from 'express'
 import cors from 'cors'
+import rateLimit from 'express-rate-limit'
 import Razorpay from 'razorpay'
 
+const __dirname = dirname(fileURLToPath(import.meta.url))
+const menu = JSON.parse(readFileSync(join(__dirname, 'src/data/menu.json'), 'utf-8'))
+const priceMap = Object.fromEntries(menu.map((i) => [i.name, Number(i.price.replace('₹', ''))]))
+
 const app = express()
-app.use(cors())
+
+const ALLOWED_ORIGIN = process.env.VITE_APP_URL || 'http://localhost:5173'
+app.use(cors({ origin: ALLOWED_ORIGIN }))
 app.use(express.json())
+
+const apiLimiter = rateLimit({
+  windowMs: 60_000,
+  max: 10,
+  message: { error: 'Too many requests. Please slow down.' },
+})
 
 async function verifyToken(req, res, next) {
   const authHeader = req.headers.authorization
@@ -20,8 +36,7 @@ async function verifyToken(req, res, next) {
       { headers: { Authorization: `Bearer ${token}` } },
     )
     if (!resp.ok) throw new Error('Token validation failed')
-    const user = await resp.json()
-    req.user = user
+    req.user = await resp.json()
     next()
   } catch {
     return res.status(401).json({ error: 'Invalid or expired token' })
@@ -33,11 +48,27 @@ const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 })
 
-app.post('/api/create-order', verifyToken, async (req, res) => {
+app.post('/api/create-order', apiLimiter, verifyToken, async (req, res) => {
   try {
-    const { amount } = req.body
+    const { items } = req.body
+    if (!items?.length) {
+      return res.status(400).json({ error: 'Cart is empty' })
+    }
+
+    let total = 0
+    for (const item of items) {
+      const expectedPrice = priceMap[item.name]
+      if (expectedPrice === undefined) {
+        return res.status(400).json({ error: `Unknown item: ${item.name}` })
+      }
+      if (item.price !== expectedPrice) {
+        return res.status(400).json({ error: `Price mismatch for ${item.name}` })
+      }
+      total += expectedPrice * item.quantity
+    }
+
     const order = await razorpay.orders.create({
-      amount: amount * 100,
+      amount: total * 100,
       currency: 'INR',
       receipt: `receipt_${Date.now()}`,
     })

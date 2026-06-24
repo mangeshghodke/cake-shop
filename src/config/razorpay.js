@@ -14,14 +14,14 @@ export function loadRazorpayScript() {
   })
 }
 
-export async function createOrder(amount, token) {
+export async function createOrder(items, token) {
   const res = await fetch('/api/create-order', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ amount }),
+    body: JSON.stringify({ items }),
   })
   if (!res.ok) throw new Error('Failed to create order')
   return res.json()

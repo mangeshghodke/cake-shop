@@ -38,7 +38,8 @@ function Checkout() {
       }
 
       const token = await getAccessTokenSilently()
-      const order = await createOrder(total, token)
+      const items = cart.map((i) => ({ name: i.name, price: Number(i.price.replace('₹', '')), quantity: i.quantity }))
+      const order = await createOrder(items, token)
       const itemList = cart.map((i) => `${i.name} x${i.quantity}`).join(', ')
 
       openRazorpayCheckout({
