@@ -1,5 +1,5 @@
 const RAZORPAY_KEY_ID = import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_XXXXXXXXXXXX'
-const API_BASE = import.meta.env.VITE_API_URL || ''
+const API_BASE = import.meta.env.VITE_API_URL || 'https://cake-shop-02dx.onrender.com'
 
 export function loadRazorpayScript() {
   return new Promise((resolve) => {
