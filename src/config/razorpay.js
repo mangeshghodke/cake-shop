@@ -1,4 +1,5 @@
 const RAZORPAY_KEY_ID = import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_XXXXXXXXXXXX'
+const API_BASE = import.meta.env.VITE_API_URL || ''
 
 export function loadRazorpayScript() {
   return new Promise((resolve) => {
@@ -15,7 +16,7 @@ export function loadRazorpayScript() {
 }
 
 export async function createOrder(items, token) {
-  const res = await fetch('/api/create-order', {
+  const res = await fetch(`${API_BASE}/api/create-order`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
