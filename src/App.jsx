@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import { CartProvider } from './context/CartContext'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -12,9 +12,16 @@ import Checkout from './pages/Checkout'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
+  const navigate = useNavigate()
   useEffect(() => {
+    const redirect = sessionStorage.getItem('gh-pages-redirect')
+    if (redirect) {
+      sessionStorage.removeItem('gh-pages-redirect')
+      navigate(redirect, { replace: true })
+      return
+    }
     window.scrollTo(0, 0)
-  }, [pathname])
+  }, [pathname, navigate])
   return null
 }
 

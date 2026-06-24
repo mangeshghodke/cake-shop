@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirecting...</title>
+    <script>
+      const base = '/cake-shop/'
+      const path = window.location.pathname.replace(base, '') || '/'
+      sessionStorage.setItem('gh-pages-redirect', path)
+      window.location.replace(base)
+    </script>
+  </head>
+  <body></body>
+</html>
