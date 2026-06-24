@@ -1,11 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { withAuthenticationRequired } from '@auth0/auth0-react'
+import { withAuthenticationRequired, useAuth0 } from '@auth0/auth0-react'
 import { useCart, useCartDispatch } from '../context/CartContext'
 import { loadRazorpayScript, createOrder, openRazorpayCheckout } from '../config/razorpay'
 
 function Checkout() {
+  const { getAccessTokenSilently } = useAuth0()
   const cart = useCart()
   const dispatch = useCartDispatch()
   const [loading, setLoading] = useState(false)
@@ -36,7 +37,8 @@ function Checkout() {
         return
       }
 
-      const order = await createOrder(total)
+      const token = await getAccessTokenSilently()
+      const order = await createOrder(total, token)
       const itemList = cart.map((i) => `${i.name} x${i.quantity}`).join(', ')
 
       openRazorpayCheckout({
@@ -51,8 +53,15 @@ function Checkout() {
           setLoading(false)
         },
       })
-    } catch {
-      alert('Failed to create order. Make sure the payment server is running.')
+    } catch (err) {
+      const msg = err?.message || ''
+      if (msg.includes('login_required') || msg.includes('unauthorized')) {
+        alert('Session expired. Please sign in again.')
+      } else if (msg.includes('Failed to create order') || msg.includes('fetch')) {
+        alert('Payment server is not running. Start it with: npm run server')
+      } else {
+        alert(msg || 'Something went wrong. Please try again.')
+      }
       setLoading(false)
     }
   }
