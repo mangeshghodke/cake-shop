@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Classic Chocolate Truffle",
+    "description": "Rich, moist chocolate layers with silky ganache and chocolate shavings.",
+    "price": "₹45",
+    "category": "Chocolate",
+    "img": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80"
+  },
+  {
+    "name": "Strawberry Bliss",
+    "description": "Fresh strawberry cream with vanilla sponge topped with fresh berries.",
+    "price": "₹42",
+    "category": "Fruit",
+    "img": "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600&q=80"
+  },
+  {
+    "name": "Red Velvet Dream",
+    "description": "Classic red velvet cake with cream cheese frosting and red velvet crumbs.",
+    "price": "₹48",
+    "category": "Classic",
+    "img": "https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?w=600&q=80"
+  },
+  {
+    "name": "New York Cheesecake",
+    "description": "Creamy baked cheesecake on a graham cracker crust with berry compote.",
+    "price": "₹50",
+    "category": "Classic",
+    "img": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600&q=80"
+  },
+  {
+    "name": "Vanilla Celebration",
+    "description": "Light vanilla sponge with buttercream frosting and rainbow sprinkles.",
+    "price": "₹40",
+    "category": "Classic",
+    "img": "https://images.unsplash.com/photo-1621303837174-89787a7d4729?w=600&q=80"
+  },
+  {
+    "name": "Assorted Cupcakes",
+    "description": "A dozen mini delights in chocolate, vanilla, and red velvet flavors.",
+    "price": "₹35",
+    "category": "Cupcakes",
+    "img": "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&q=80"
+  },
+  {
+    "name": "French Macarons",
+    "description": "Delicate almond meringue cookies in assorted flavors and colors.",
+    "price": "₹30",
+    "category": "Pastries",
+    "img": "https://images.unsplash.com/photo-1586788680434-30d324b2d46f?w=600&q=80"
+  },
+  {
+    "name": "Fruit Garden Cake",
+    "description": "Light chiffon cake topped with seasonal fresh fruits and whipped cream.",
+    "price": "₹44",
+    "category": "Fruit",
+    "img": "https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?w=600&q=80"
+  },
+  {
+    "name": "Elegant Wedding Cake",
+    "description": "Multi-tiered white cake with vanilla buttercream and edible flowers.",
+    "price": "₹200",
+    "category": "Special",
+    "img": "https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=600&q=80"
+  },
+  {
+    "name": "Cheese Chocolate  Cake",
+    "description": "Home made cheese cake.",
+    "price": "₹250",
+    "category": "Classic",
+    "img": "https://images.unsplash.com/photo-1708175313856-8573b2bf8a3a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  }
+]
