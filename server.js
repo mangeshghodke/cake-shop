@@ -13,8 +13,12 @@ const priceMap = Object.fromEntries(menu.map((i) => [i.name, Number(i.price.repl
 
 const app = express()
 
-const ALLOWED_ORIGIN = process.env.VITE_APP_URL || 'http://localhost:5173'
-app.use(cors({ origin: ALLOWED_ORIGIN }))
+const ALLOWED_ORIGINS = [
+  process.env.VITE_APP_URL,
+  'http://localhost:5173',
+  'https://mangeshghodke.github.io',
+].filter(Boolean)
+app.use(cors({ origin: ALLOWED_ORIGINS }))
 app.use(express.json())
 
 const apiLimiter = rateLimit({
